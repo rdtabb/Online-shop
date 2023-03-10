@@ -1,0 +1,38 @@
+/* -------------------------------------- */
+/* imported reset                         */
+/* -------------------------------------- */
+@import url(./reset.scss);
+
+/* -------------------------------------- */
+/* variables                              */
+/* -------------------------------------- */
+
+:root {
+  --clr-primary-100: 0, 0%, 0%;
+  --clr-primary-900: 0, 0%, 100%;
+
+  --ff-primary: 'Montserrat', sans-serif;
+  --fs-400: 1.25rem;
+
+  --fw-400: 400;
+}
+
+/* -------------------------------------- */
+/* body and container                     */
+/* -------------------------------------- */
+
+body {
+  background-color: hsl(var(--clr-primary-100));
+  color: hsl(var(--clr-primary-900));
+  font-size: var(--fs-400);
+  font-weight: var(--fw-400);
+  font-family: var(--ff-primary);
+}
+
+.container {
+  --width: 60rem;
+  --padding: 1rem;
+
+  width: min(var(--width), 100% - var(--padding) * 2);
+  margin-inline: auto;
+}
