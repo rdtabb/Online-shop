@@ -18,6 +18,7 @@
   --fs-600: 2rem;
 
   --fw-400: 400;
+  --fw-500: 500;
   --fw-600: 600;
 }
 
@@ -42,6 +43,11 @@ body {
   --width: 60rem;
   --padding: 1rem;
 
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.5rem;
+  min-height: 100vh;
   width: min(var(--width), 100% - var(--padding) * 2);
   margin-inline: auto;
 }
@@ -91,5 +97,67 @@ body {
 
   &__totals {
     font-size: var(--fs-300);
+  }
+}
+
+/* -------------------------------------- */
+/* main for products                      */
+/* -------------------------------------- */
+
+.main--products {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+}
+
+.product {
+  --padding-inline: 1rem;
+
+  display: grid;
+  gap: .5rem;
+  background-color: hsl(var(--clr-primary-900), .1);
+  border-radius: .25rem;
+  overflow: hidden;
+
+  &__name{
+    padding-inline: var(--padding-inline);
+    font-weight: var(--fw-500);
+  }
+
+  &__cta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 var(--padding-inline) var(--padding-inline);
+  }
+
+  &__add {
+    background: transparent;
+    color: hsl(var(--clr-primary-900));
+    border: 1px solid hsl(var(--clr-primary-900));
+    font-size: var(--fs-300);
+    padding: .25rem 1rem;
+    border-radius: 100vmax;
+    cursor: pointer;
+    transition: all 200ms ease-in;
+
+    &:hover {
+      color: hsl(var(--clr-primary-100));
+      background-color: hsl(var(--clr-primary-900));
+    }
+  }
+
+  &__price {
+    background-color: hsl(var(--clr-primary-900));
+    color: hsl(var(--clr-primary-100));
+    font-size: var(--fs-300);
+    padding: .25rem 1rem;
+    border-radius: 100vmax;
+  }
+}
+
+@media (max-width: 30rem) {
+  .header__group {
+    flex-direction: column;
   }
 }
