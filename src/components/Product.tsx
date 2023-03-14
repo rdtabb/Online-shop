@@ -40,7 +40,6 @@ const Product = ({
             </p>
             <button className="product__add" onClick={onAddToCart}>Add</button>
         </div>
-        
     </article>
   )
 

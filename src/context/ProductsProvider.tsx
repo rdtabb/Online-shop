@@ -24,17 +24,17 @@ const initState: ProductType[] = [
     },
     {
         "sku": "item0004",
-        "name": "Street Beat Block",
+        "name": "Street Beat Block Originals",
         "price": 79.99
     },
     {
         "sku": "item0005",
-        "name": "Street Beat Wave",
+        "name": "Street Beat Wave Super-Beater",
         "price": 99.99
     },
     {
         "sku": "item0006",
-        "name": "PUMA Slipstream",
+        "name": "PUMA Slipstream Super-Ultra",
         "price": 19.99
     }
 ]

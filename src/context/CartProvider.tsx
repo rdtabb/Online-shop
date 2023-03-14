@@ -4,94 +4,79 @@ export type CartItemType = {
     sku: string,
     name: string,
     price: number,
-    qty: number
+    qty: number,
 }
 
-type CartStateType = { 
-    cart: CartItemType[] 
-}
+type CartStateType = { cart: CartItemType[] }
 
-const initCartState: CartStateType = { 
-    cart: [] 
-}
+const initCartState: CartStateType = { cart: [] }
 
 const REDUCER_ACTION_TYPE = {
     ADD: "ADD",
     REMOVE: "REMOVE",
     QUANTITY: "QUANTITY",
-    SUBMIT: "SUBMIT"
+    SUBMIT: "SUBMIT",
 }
 
 export type ReducerActionType = typeof REDUCER_ACTION_TYPE
 
 export type ReducerAction = {
     type: string,
-    payload?: CartItemType
+    payload?: CartItemType,
 }
 
 const reducer = (state: CartStateType, action: ReducerAction): CartStateType => {
     switch (action.type) {
         case REDUCER_ACTION_TYPE.ADD: {
             if (!action.payload) {
-                throw new Error("YOUR FUCKING PAYLOAD MISSING ADD ACTION IDIOT SANDWICH")
+                throw new Error('action.payload missing in ADD action')
             }
 
             const { sku, name, price } = action.payload
-            const filteredCart: CartItemType[] = state.cart.filter(item => 
-                item.sku != sku
-            )
-            const itemExists: CartItemType | undefined = state.cart.find(item =>
-                item.sku === sku
-            )
+
+            const filteredCart: CartItemType[] = state.cart.filter(item => item.sku !== sku)
+
+            const itemExists: CartItemType | undefined = state.cart.find(item => item.sku === sku)
+
             const qty: number = itemExists ? itemExists.qty + 1 : 1
 
-            return {
-                ...state, cart: [...filteredCart, {
-                    sku, name, price, qty
-                }]
-            }
+            return { ...state, cart: [...filteredCart, { sku, name, price, qty }] }
         }
         case REDUCER_ACTION_TYPE.REMOVE: {
             if (!action.payload) {
-                throw new Error("YOUR FUCKING PAYLOAD MISSING REMOVE ACTION IDIOT SANDWICH")
+                throw new Error('action.payload missing in REMOVE action')
             }
 
             const { sku } = action.payload
-            const filteredCart: CartItemType[] = state.cart.filter(item => 
-                item.sku != sku
-            )
 
-            return {...state, cart: {...filteredCart}}
+            const filteredCart: CartItemType[] = state.cart.filter(item => item.sku !== sku)
+
+            return { ...state, cart: [...filteredCart] }
         }
         case REDUCER_ACTION_TYPE.QUANTITY: {
             if (!action.payload) {
-                throw new Error("YOUR FUCKING PAYLOAD MISSING QUANTITY ACTION IDIOT SANDWICH")
+                throw new Error('action.payload missing in QUANTITY action')
             }
 
             const { sku, qty } = action.payload
-            const itemExists: CartItemType | undefined = state.cart.find(item =>
-                item.sku === sku
-            )
+
+            const itemExists: CartItemType | undefined = state.cart.find(item => item.sku === sku)
 
             if (!itemExists) {
-                throw new Error('Item must exist to update quantity')
+                throw new Error('Item must exist in order to update quantity')
             }
 
-            const updatedItem: CartItemType = {
-                ...itemExists, qty 
-            }
+            const updatedItem: CartItemType = { ...itemExists, qty }
 
-            const filteredCart: CartItemType[] = state.cart.filter(item => 
-                item.sku != sku
-            )
-            
+            const filteredCart: CartItemType[] = state.cart.filter(item => item.sku !== sku)
+
             return { ...state, cart: [...filteredCart, updatedItem] }
         }
         case REDUCER_ACTION_TYPE.SUBMIT: {
             return { ...state, cart: [] }
         }
         default:
-            throw new Error('THIS ACTION TYPE IS FUCKING RIDICULOUS YOU BOZO')
+            throw new Error('Unidentified reducer action type')
     }
 }
 
@@ -102,15 +87,13 @@ const useCartContext = (initCartState: CartStateType) => {
         return REDUCER_ACTION_TYPE
     }, [])
 
-    const totalItems = state.cart.reduce((prev, cartItem) => {
-        return prev + cartItem.qty
+    const totalItems = state.cart.reduce((previousValue, cartItem) => {
+        return previousValue + cartItem.qty
     }, 0)
-    const totalPrice = new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'USD'
-    }).format(
-        state.cart.reduce((prev, cartItem) => {
-            return prev + (cartItem.qty * cartItem.price)
+
+    const totalPrice = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(
+        state.cart.reduce((previousValue, cartItem) => {
+            return previousValue + (cartItem.qty * cartItem.price)
         }, 0)
     )
 
@@ -125,7 +108,7 @@ const useCartContext = (initCartState: CartStateType) => {
 
 export type UseCartContextType = ReturnType<typeof useCartContext>
 
-const initCartConextState: UseCartContextType = {
+const initCartContextState: UseCartContextType = {
     dispatch: () => { },
     REDUCER_ACTIONS: REDUCER_ACTION_TYPE,
     totalItems: 0,
@@ -133,9 +116,9 @@ const initCartConextState: UseCartContextType = {
     cart: [],
 }
 
-export const CartContext = createContext<UseCartContextType>(initCartConextState)
+const CartContext = createContext<UseCartContextType>(initCartContextState)
 
-type ChildrenType =  { children?: ReactElement | ReactElement[] }
+type ChildrenType = { children?: ReactElement | ReactElement[] }
 
 export const CartProvider = ({ children }: ChildrenType): ReactElement => {
     return (
@@ -145,4 +128,4 @@ export const CartProvider = ({ children }: ChildrenType): ReactElement => {
     )
 }
 
-export default CartContext
+export default CartContext 

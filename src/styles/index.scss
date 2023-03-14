@@ -27,6 +27,14 @@
   color: hsl(var(--clr-primary-100));
 }
 
+::-webkit-scrollbar {
+  width: .25rem;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: hsl(var(--clr-primary-900));
+}
+
 /* -------------------------------------- */
 /* body and container                     */
 /* -------------------------------------- */
@@ -89,7 +97,8 @@ body {
     cursor: pointer;
     transition: all 200ms ease-in;
 
-    &:hover {
+    &:hover,
+    &:focus-visible {
       background: hsl(var(--clr-primary-900));
       color: hsl(var(--clr-primary-100));
     }
@@ -97,6 +106,18 @@ body {
 
   &__totals {
     font-size: var(--fs-300);
+  }
+}
+
+@media (max-width: 30rem) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+
+    &__group {
+      flex-direction: column;
+      align-items: flex-start;
+    }
   }
 }
 
@@ -156,8 +177,108 @@ body {
   }
 }
 
-@media (max-width: 30rem) {
-  .header__group {
-    flex-direction: column;
+/* -------------------------------------- */
+/* cart                                   */
+/* -------------------------------------- */
+
+.cart {
+  list-style: none;
+  display: grid;
+  gap: 1rem;
+
+  &__totals {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 2rem;
+    margin-top: 3rem;
+    border: 1px solid hsl(var(--clr-primary-900));
+    border-radius: 1rem;
   }
+
+  &__item {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(2, 1fr);
+    padding: clamp(.1rem, 1vw, .5rem);
+  }
+
+  &__column {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  &__column--two {
+    justify-content: space-around;
+  }
+
+  &__img {
+    max-width: 6rem;
+    border-radius: 1rem;
+    object-fit: cover;
+  }
+
+  &__title {
+    font-weight: var(--fw-600);
+    font-size: clamp(var(--fs-300), 4vw, var(--fs-400));
+  }
+
+  &__button {
+    color: white;
+    border: none;
+    background: transparent no-repeat center;
+    background-image: url(../assets/close.svg);
+    background-size: contain;
+
+    width: 1.5rem;
+    aspect-ratio: 1;
+
+    cursor: pointer;
+    transition: all 200ms ease-in;
+
+    &:hover {
+      opacity: .6;
+    }
+  }
+
+  &__submit {
+    background: hsl(var(--clr-primary-900));
+    color: hsl(var(--clr-primary-100));
+    padding: .25rem .75rem;
+    border: 1px solid hsl(var(--clr-primary-900));
+    border-radius: .5rem;
+    transition: all 150ms ease-in;
+    cursor: pointer;
+
+    &:hover {
+      background-color: transparent;
+      color: hsl(var(--clr-primary-900));
+    }
+  }
+}
+
+@media (max-width: 40rem) {
+  .cart {
+    &__per-item {
+      display: none;
+    }
+
+    &__qty {
+      display: none;
+    }
+
+    &__img {
+      max-width: 4.5rem;
+    }
+  }
+}
+
+/* -------------------------------------- */
+/* footer                                 */
+/* -------------------------------------- */
+
+.footer {
+  margin-bottom: 2rem;
 }
